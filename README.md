@@ -1,1 +1,1 @@
-# Schpotify
+https://github.com/guilhermesad/rspotify
