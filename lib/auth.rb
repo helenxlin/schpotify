@@ -17,7 +17,11 @@ class SpotifyAccount
 
   def initialize 
     Launchy.open OAUTH_URL
-    @user_token = HTTParty.get(BASE_URL+'/get_token/' + USER_NUMBER)
+    begin 
+      @user_token = HTTParty.get(BASE_URL+'/get_token/' + USER_NUMBER)
+    rescue StandardError
+      raise(" It seems as though the development server is down \u{1F623} Contact Cam to turn on the development server to make it work again")
+    end
     @headers = { 'Accept' => 'application/json', 'Content-Type' => 'application/json', 'Authorization' => "Bearer #{@user_token}"}
   end
 
