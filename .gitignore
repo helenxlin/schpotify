@@ -1,1 +1,2 @@
-spotify-auth-cli/.env
+./auth_server/node_modules
+
