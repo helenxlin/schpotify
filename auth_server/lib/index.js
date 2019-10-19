@@ -1,6 +1,7 @@
 const express = require('express')
 const chalk = require('chalk')
-const session = require('client-sessions')
+const uuid = require('uuid/v4')
+const session = require("client-sessions");
 require('dotenv').config({ path: '../../.env'})
 
 var Spotify = require('node-spotify-api');
@@ -14,10 +15,16 @@ var spotify = new Spotify({
 });
 
 app.use(session({
-  cookieName: 'session',
-  secret: 'random_string_goes_here',
+  secret: 'keyboard_dog',
+  resave: false,
+  saveUninitialized: true,
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
+  genid: (req) => {
+    console.log('inside the session middleware')
+    console.log(req.sessionID)
+    return uuid()
+  }
 }));
 
 app.get('/callback', (req, res) => {
@@ -52,14 +59,17 @@ app.get('/get_token/:state', async (req, res) => {
       }, 5000)
     })
 
-    req.session.state = req.params.state
-    req.session.token = token_hold[req.params.state]
-    res.send(req.session.token)
+    res.send(token_hold[req.params.state])
   }
   catch {
     res.status = 400
     res.send(null);
   }
+})
+
+app.get('/test_session', (req, res) => {
+  res.status = 200
+  res.send('good')
 })
 
 
