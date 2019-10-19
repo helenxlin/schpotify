@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <script>
+    const token = window.location.hash
+      .substring(1)
+    const user_state= window.location.hash
+      .substring(2)
+
+      fetch('/token?' + token + '/state?' + user_state )
+      .then(() => {
+        window.close()
+      })
+  </script>
+</body>
+</html>
