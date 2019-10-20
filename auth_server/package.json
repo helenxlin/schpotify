@@ -1,0 +1,20 @@
+{
+  "name": "spotify-auth-cli",
+  "version": "1.1.0",
+  "description": "Get a Spotify access token quickly and easily via your command line",
+  "main": "./lib/index.js",
+  "author": "Lawrence Holmes",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.3.1",
+    "client-sessions": "^0.8.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.2",
+    "node-spotify-api": "^1.1.1",
+    "uuid": "^3.3.3"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "spotify-token": "./bin/spotify-token.js"
+  }
+}
