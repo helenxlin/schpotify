@@ -12,7 +12,8 @@ box2 = TTY::Box.frame(align: :center, width: TTY::Screen.width - 5, height: 11, 
       bg: :green
     }
   }) do 
-    "SCHPOTIFY INSTRUCTIONS\nObjective: Guess the song that is playing from a random selection of four song names.\n1. Choose a playlist you would like to guess from.\n2. The command line will play a song.\n3. Press Space to pause the song at any moment.\n4. Guess the song name from the four choices."
+    "SCHPOTIFY INSTRUCTIONS\nObjective: Guess the song!\n1. Search for any playlist that is on Spotify.\n2. A random song from that playlist will start playing.\n3. 
+    The timer starts now! Using the four options given, guess the song!"
 end
 
 print box2
