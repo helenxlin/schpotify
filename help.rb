@@ -5,7 +5,7 @@ require 'tty-screen'
 :green #1DB954
 :black #000000
 
-box2 = TTY::Box.frame(align: :center, width: TTY::Screen.width - 5, height: 11, title: {top_left: '   HELP   '}, border: :thick, padding: 1, style: {
+helpBox = TTY::Box.frame(align: :center, width: TTY::Screen.width - 5, height: 11, title: {top_left: '   HELP   '}, border: :thick, padding: 1, style: {
     fg: :green,
     border: {
       fg: :black,
@@ -16,4 +16,4 @@ box2 = TTY::Box.frame(align: :center, width: TTY::Screen.width - 5, height: 11, 
     The timer starts now! Using the four options given, guess the song!"
 end
 
-print box2
+print helpBox
