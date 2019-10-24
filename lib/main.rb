@@ -1,5 +1,7 @@
 require 'rspotify'
 require_relative 'auth'
+require_relative 'help'
+
 #CLIENT_ID and CLIENT_SECRET are currently being defiend in auth.rb, this is insecure but it is something the team will need to discuss
 RSpotify.authenticate(CLIENT_ID, CLIENT_SECRET)
 user = SpotifyAccount.new()
@@ -19,7 +21,8 @@ user.pause
 
 puts RSpotify::Artist.search('Arctic Monkeys').first.name
 
-
+include HelpBox
+print HelpBox.printHelpBox
 
 
 

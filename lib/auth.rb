@@ -1,7 +1,6 @@
 require 'launchy'
 require 'json'
 require 'httparty'
-require 'dotenv/load'
 
 CLIENT_ID="c8f6f96e5c804f51bcc45f9786612a5c"
 CLIENT_SECRET="a793c119ddb54663a98b67b892cdf716"
