@@ -7,8 +7,7 @@ CLIENT_SECRET="a793c119ddb54663a98b67b892cdf716"
 BASE_URL='http://159.203.178.244'
 
 class SpotifyAccount
-  attr_reader :USER_NUMBER, :user_token
-  @headers
+  attr_reader :USER_NUMBER, :user_token, :account
   USER_NUMBER = rand(999999999).to_s
   REDIRECT_URI = BASE_URL + '/callback'
   SCOPE = 'user-modify-playback-state user-read-currently-playing user-read-playback-state user-read-email streaming user-library-read user-top-read playlist-modify-private'
@@ -22,10 +21,21 @@ class SpotifyAccount
       raise(" It seems as though the development server is down \u{1F623} Contact Cam to turn on the development server to make it work again")
     end
     @headers = { 'Accept' => 'application/json', 'Content-Type' => 'application/json', 'Authorization' => "Bearer #{@user_token}"}
+    @account = account_info
   end
 
   def get_devices
     url='https://api.spotify.com/v1/me/player/devices'
+    HTTParty.get(url, :headers => @headers)
+  end
+
+  def account_info
+    url = 'https://api.spotify.com/v1/me'
+    HTTParty.get(url, :headers => @headers)
+  end
+  
+  def player_information
+    url = 'https://api.spotify.com/v1/me/player'
     HTTParty.get(url, :headers => @headers)
   end
 
@@ -57,7 +67,7 @@ class SpotifyAccount
       puts "Uh Oh, it seems like you don't have any active devices \u{1F3A7} Open up spotify and test playing a song to start, (press enter when ready)"
       gets
     end
-    self.pause
-    puts "\u{1f60e} You are good to go! \u{1f60e}\nTo play fair, minimzie your spotify client so you don't cheat!\u{1F64F}" unless mode === 'silent'
+    puts "\u{1f60e} You are good to go! \u{1f60e}\nTo play fair, minimize your spotify client so you don't cheat!\u{1F64F}" unless mode === 'silent'
+    return true
   end
 end
