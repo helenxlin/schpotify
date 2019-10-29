@@ -1,4 +1,4 @@
-#Schpotify 
+# Schpotify 
 
 A little game for the CLI to guess songs
 
