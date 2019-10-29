@@ -1,12 +1,16 @@
 require 'minitest/autorun'
 require_relative '../lib/auth'
 
-class TestWeapons < Minitest::Test
+class TestUserAuthentication < Minitest::Test
   @@user = SpotifyAccount.new
   def test_user_instatiation_and_oauth_flow
     refute_nil(@@user.user_token, "instances of user don't seem to have a token associated with their account. Something is wrong with oauth token flow")
   end
-
+  def test_spotify_player_validation
+    expected = true
+    actual = @@user.test_valid_spotify
+    assert_equal(expected, actual, 'Spotify Player could not validate')
+  end
   def test_user_play_ability
     @@user.play
     expected = true
