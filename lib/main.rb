@@ -16,6 +16,7 @@ user.play
 #pause playback of a song
 user.pause
 
+puts user.account.username
 
 puts RSpotify::Artist.search('Arctic Monkeys').first.name
 
