@@ -24,17 +24,32 @@ class Game
      RSpotify::User.find(userid).playlists
   end
 
+  def is_integer_between_bounds?(input, upperBound)
+    !!Integer(input) && ((input.to_i >= 1) && (input.to_i <= upperBound))
+    rescue then false
+  end
+
   def select_playlist_list
+    incorrectInput = true
+
     puts "would you like to play with \n 1. a profile playlist \n 2. search playlists \n 3. popular playlists"
-    input = gets.chomp.to_i
-    if (input === 1)
-      return user_playlist
-    elsif (input === 2)
-      print "search query: "
-      input = gets.chomp
-      return search_playlist(input)
-    elsif (input === 3)
-      return featured_playlists
+    userInput = gets.chomp
+
+    while(incorrectInput) do
+      if (is_integer_between_bounds?(userInput, 3))
+        if (userInput.to_i === 1)
+          return user_playlist
+        elsif (userInput.to_i === 2)
+          print "search query: "
+          input = gets.chomp
+          return search_playlist(input)
+        elsif (userInput.to_i === 3)
+          return featured_playlists
+        end
+      else
+        puts "would you like to play with \n 1. a profile playlist \n 2. search playlists \n 3. popular playlists"
+        userInput = gets.chomp
+      end
     end
   end
 
@@ -45,15 +60,34 @@ class Game
 
   def select_playlist
     playlist_list = select_playlist_list
+    playlist_list.select! {|p| p.tracks.length() > 15}
+
+    while (playlist_list.length() == 0) 
+      puts "Sorry. There are no matches for what you searched up."
+      playlist_list = select_playlist_list()
+      playlist_list.select! {|p| p.tracks.length() > 15}
+    end
+
     puts "Select a playlist to play the game with\n"
-    playlist_list.select! {|p| p.tracks.length() > 12}
     playlist_list.each_with_index {|p,idx| puts "\t#{idx + 1}. - #{p.name} (Difficulty: #{playlist_difficulty(p.tracks.length())})"}
 
-    print 'Playlist num: ' 
-    playlist = playlist_list[gets.chomp.to_i - 1]
-    @played_songs = []
+    invalidInput = true
+    print 'Enter the playlist number: ' 
+    userNum = gets.chomp
+
+    while (invalidInput) do
+      if (is_integer_between_bounds?(userNum, playlist_list.length))
+        playlist = playlist_list[userNum.to_i - 1]
+        @played_songs = []
+        invalidInput = false
+      else
+        print 'Enter the playlist number: ' 
+        userNum = gets.chomp
+      end
+    end
 
     return playlist
+    
   end
 
   # creates a lis of 4 songs to choose from, chooses one of them to be the correct song
@@ -98,9 +132,22 @@ class Game
     player.pause
     print_song_list(song_list)
 
+    # User Validation
+    incorrectInput = true
     print "The song was: "
+    userInput = gets.chomp
 
-    guess_index = gets.chomp.to_i - 1
+    while (incorrectInput) do
+     if(is_integer_between_bounds?(userInput, 4))
+        incorrectInput = false
+     else
+        print "The song was: "
+        userInput = gets.chomp
+     end
+    end
+    
+
+    guess_index = userInput.to_i - 1
     seconds = watch.mark[0].round(2)
     puts "\n#{seconds} seconds"
     if (guess_index === @correctSongIndex)
