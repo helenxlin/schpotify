@@ -2,9 +2,13 @@ require 'rspotify'
 require 'stop_watch'
 require_relative 'auth'
 require_relative 'help'
+require './highscores'
 
 class Game
   attr_reader :player 
+
+  include Highscores 
+
   def initialize
     RSpotify.authenticate(CLIENT_ID, CLIENT_SECRET)
     @player = SpotifyAccount.new()
