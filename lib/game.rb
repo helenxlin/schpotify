@@ -98,11 +98,6 @@ class Game
       randNum = rand(0..playlist.tracks.length - 1)
       while (random_numbers.include?(randNum) || @played_songs.include?(playlist.tracks[randNum]))
         randNum = rand(0..playlist.tracks.length - 1)
-
-        while (random_numbers.include? randNum) do
-          randNum = rand(0..playlist.tracks.length - 1)
-        end
-        
       end
       random_numbers.push(randNum)
       songs.push(playlist.tracks[randNum])
