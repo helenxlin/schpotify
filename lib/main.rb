@@ -2,7 +2,8 @@ require_relative 'game'
 
 game = Game.new
 
-score = 0;
+score = 0
+puts game.printNowPlayingBox()
 
 playlist = game.select_playlist
 highscores = game.playlist_highscore(playlist.id)
