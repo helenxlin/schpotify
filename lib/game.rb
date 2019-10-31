@@ -3,13 +3,11 @@ require 'stop_watch'
 require_relative 'auth'
 require_relative 'help'
 require './highscores'
-require_relative 'nowplaying_ui'
 
 class Game
   attr_reader :player 
 
   include Highscores 
-  include NowPlayingBox
 
   def initialize
     RSpotify.authenticate(CLIENT_ID, CLIENT_SECRET)
