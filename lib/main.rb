@@ -26,5 +26,6 @@ puts "\tyour highscore is: #{player_highscore['score']}" unless player_highscore
   gets
 end
 
+
 puts "you finished with a score of #{score}"
 game.new_score(score, playlist.id)
