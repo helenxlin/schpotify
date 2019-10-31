@@ -13,6 +13,7 @@ class SpotifyAccount
   SCOPE = 'user-modify-playback-state user-read-currently-playing user-read-playback-state user-read-email streaming user-library-read user-top-read playlist-modify-private'
   OAUTH_URL = 'https://accounts.spotify.com/authorize' + '?client_id=' + CLIENT_ID + '&response_type=token' + '&scope=' + SCOPE + '&state=' + USER_NUMBER + '&redirect_uri=' + REDIRECT_URI 
 
+
   def initialize 
     Launchy.open OAUTH_URL
     begin 
