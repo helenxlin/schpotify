@@ -40,7 +40,7 @@ The helpbox prompts user for the helpbox
 - \nENTER - go through the game
 - \nS - Shuffle the playlist
 - \nESC - quit the game
-- \n\nHit Enter to start!"
+- \n\n Hit Enter to start!"
 
 ### High Scores
 This module stores all of the high scores for the game on an online server. This module is has the following functions:
