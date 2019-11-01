@@ -31,3 +31,19 @@ The game class is responsible for the entire game procedure and implements a var
 - `create_song_list` creates a list of 4 random songs from the playlist and stores the correct song for each round.
 - `calculate_points` scoring algorithm for the number of points, which is dependent on the number of seconds user takes to identify song
 - `play_with_song_list` plays the song from the user's Spotify account and determines if the user selected the correct song from the list printed of all the songs. This function also times the user from the moment the song plays and until the user selects an option, and displays the score using the calculate_points function
+
+### Help
+The helpbox prompts user for the helpbox
+- "SPACE" - pause the song to guess
+- \nR - rewind 5 seconds
+- \nF - fast forward 5 seconds
+- \nENTER - go through the game
+- \nS - Shuffle the playlist
+- \nESC - quit the game
+- \n\nHit Enter to start!"
+
+### High Scores
+This module stores all of the high scores for the game on an online server. This module is has the following functions:
+- `new_score` obtains the user score and playlist ID, and stores in the server
+- `player_highscore` obtains the player's high score for a specific playlist
+- `playlist_highscore` stores the playlist's high score
