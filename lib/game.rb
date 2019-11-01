@@ -32,7 +32,8 @@ class Game
   def select_playlist_list
     incorrectInput = true
 
-    puts "would you like to play with \n 1. a profile playlist \n 2. search playlists \n 3. popular playlists"
+    puts "\n\n🚀  Awesome, you're authenticated! ✅\n\nLet's choose a playlist.\n\n🔍  Search through... \n 1. Your own playlists 🙋‍♀️ \n 2. Genre or name of any public playlists 👨‍👩‍👧‍👦\n 3. Top trending songs playlists 🔥\n\n"
+    print 'Search Number: '
     userInput = gets.chomp
 
     while(incorrectInput) do
@@ -47,7 +48,7 @@ class Game
           return featured_playlists
         end
       else
-        puts "would you like to play with \n 1. a profile playlist \n 2. search playlists \n 3. popular playlists"
+        puts "🚀  Awesome, you're authenticated! ✅\n\nLet's choose a playlist.\n\n🔍  Search through... \n 1. Your own playlists   🙋‍♀️ \n 2. Genre or name of any public playlists   👨‍👩‍👧‍👦\n 3. Top trending songs playlists   🔥\n\n"
         userInput = gets.chomp
       end
     end
@@ -68,11 +69,11 @@ class Game
       playlist_list.select! {|p| p.tracks.length() > 15}
     end
 
-    puts "Select a playlist to play the game with\n"
-    playlist_list.each_with_index {|p,idx| puts "\t#{idx + 1}. - #{p.name} (Difficulty: #{playlist_difficulty(p.tracks.length())})"}
+    puts "\n🤪🤪  Which playlist would you like to play the game with? 🤪🤪\n"
+    playlist_list.each_with_index {|p,idx| puts "\t#{idx + 1}. #{p.name}   (Difficulty: #{playlist_difficulty(p.tracks.length())})"}
 
     invalidInput = true
-    print 'Enter the playlist number: ' 
+    print "\nPlaylist Number: "
     userNum = gets.chomp
 
     while (invalidInput) do
@@ -81,7 +82,7 @@ class Game
         @played_songs = []
         invalidInput = false
       else
-        print 'Enter the playlist number: ' 
+        print 'Playlist Number: ' 
         userNum = gets.chomp
       end
     end
@@ -90,7 +91,7 @@ class Game
     
   end
 
-  # creates a lis of 4 songs to choose from, chooses one of them to be the correct song
+  # creates a list of 4 songs to choose from, chooses one of them to be the correct song
   def create_song_list(playlist)
     songs = []
     random_numbers =[]
@@ -109,7 +110,7 @@ class Game
 
   #prints out a of the songs, their index, and their artist name
   def print_song_list(song_list)
-    song_list.each_with_index {|s, idx| puts "\t #{idx + 1}. #{s.name} - #{s.artists.reduce("") {|accumulator, artist| accumulator + artist.name + "  "}}"}
+    song_list.each_with_index {|s, idx| puts "\t #{idx + 1}. #{s.name}  |  #{s.artists.reduce("") {|accumulator, artist| accumulator + artist.name + "  "}}"}
   end
   
   def calculate_points(seconds)
@@ -126,7 +127,7 @@ class Game
     watch = StopWatch::Timer.new
     watch.mark
 
-    puts "Press enter when you are ready to guess"
+    puts "\n\n✋  Pause when you think you know the name of the song.  ✋\n\n🏃‍♂️💨  The faster you guess, the higher your points! 📈\n\n\nRemember you can use any of the command prompts 🧐  hit the H key to see them!"
     gets
 
     player.pause
@@ -134,14 +135,14 @@ class Game
 
     # User Validation
     incorrectInput = true
-    print "The song was: "
+    print "\n🎵🎤🎧 The song number is "
     userInput = gets.chomp
 
     while (incorrectInput) do
      if(is_integer_between_bounds?(userInput, 4))
         incorrectInput = false
      else
-        print "The song was: "
+        print "\n🎵🎤🎧 The song number is "
         userInput = gets.chomp
      end
     end
@@ -149,12 +150,12 @@ class Game
 
     guess_index = userInput.to_i - 1
     seconds = watch.mark[0].round(2)
-    puts "\n#{seconds} seconds"
+    puts "\n⏱ #{seconds}s"
     if (guess_index === @correctSongIndex)
       return calculate_points(seconds)
 
     else
-      puts song_list[@correctSongIndex].name + " is the correct song"
+      puts "That is incorrrect.  ❎  " + song_list[@correctSongIndex].name + " is the correct song!"
       return 0
     end
   end
