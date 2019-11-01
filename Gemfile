@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 gem 'rspotify'
+gem 'tty-box'
+gem 'tty-screen'
 gem 'httparty'
 gem 'launchy'
-gem 'socket.io-client-simple'
-
+gem 'rake'
+gem 'stop_watch'
