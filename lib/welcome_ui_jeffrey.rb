@@ -2,13 +2,13 @@ require 'rspotify'
 require 'tty-box'
 require 'tty-screen'
 
-module HelpBox
+module welcomeBox
 
-  def printHelpBox()
+  def self.printWelcomeBox()
     :green #1DB954
     :black #000000
 
-    helpBox = TTY::Box.frame(align: :center, width: TTY::Screen.width - 5, height: 11, title: {top_left: '   HELP   '}, border: :thick, padding: 1, style: {
+    welcomeBox = TTY::Box.frame(align: :center, width: TTY::Screen.width - 5, height: 11, title: {top_left: '   HELP   '}, border: :thick, padding: 1, style: {
         fg: :green,
         border: {
           fg: :black,

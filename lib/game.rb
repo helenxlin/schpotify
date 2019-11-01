@@ -3,13 +3,25 @@ require 'stop_watch'
 require_relative 'auth'
 require_relative 'help'
 require_relative 'nowplaying-ui'
+require_relative 'welcome_ui.rb'
 require './highscores'
+require_relative 'spotify_not_open_ui'
+require_relative 'setup_ui'
+require_relative 'playlist_ui'
+require_relative 'correct_ui'
+require_relative 'incorrect_ui'
 
 class Game
   attr_reader :player 
 
   include Highscores
   include UI
+  include WelcomeBox
+  include SpotifyNotOpenBox
+  include SetupBox
+  include PlaylistBox
+  include CorrectBox
+  include IncorrectBox
 
   def initialize
     RSpotify.authenticate(CLIENT_ID, CLIENT_SECRET)
@@ -27,7 +39,7 @@ class Game
   end
 
   def select_playlist_list
-    puts "would you like to play with \n 1. a profile playlist \n 2. search playlists \n 3. popular playlists"
+    puts "Would you like to play with \n 1. a profile playlist \n 2. search playlists \n 3. popular playlists"
     input = gets.chomp.to_i
     if (input === 1)
       return user_playlist
@@ -81,8 +93,8 @@ class Game
   end
   
   def calculate_points(seconds)
-    points = (1108.8 * (2.71 ** (-0.103 * seconds))).ceil 
-    return points
+    @points = (1108.8 * (2.71 ** (-0.103 * seconds))).ceil 
+    return @points
   end 
 
   # the user guesses the song, returns true or false if they got it correct on not
@@ -100,16 +112,16 @@ class Game
     player.pause
     print_song_list(song_list)
 
-    print "The song was: "
+    print "\nThe song was: "
 
     guess_index = gets.chomp.to_i - 1
-    seconds = watch.mark[0].round(2)
-    puts "\n#{seconds} seconds"
+    @seconds = watch.mark[0].round(2)
+    puts "\n#{@seconds} seconds"
     if (guess_index === @correctSongIndex)
-      return calculate_points(seconds)
+      return calculate_points(@seconds)
 
     else
-      puts song_list[@correctSongIndex].name + " is the correct song"
+      puts "Incorrect. " + song_list[@correctSongIndex].name + " is the correct song"
       return 0
     end
   end
