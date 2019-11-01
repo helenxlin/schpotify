@@ -2,7 +2,7 @@ require_relative 'game'
 
 game = Game.new
 
-score = 0;
+@score = 0
 
 playlist = game.select_playlist
 highscores = game.playlist_highscore(playlist.id)
@@ -22,7 +22,7 @@ puts "\tyour highscore is: #{player_highscore['score']}" unless player_highscore
     puts "You gained #{result} points"
     score += result
   end
-  puts "Your current score is #{score} \n press ENTER to play the next round"
+  puts "Your current score is #{@score} \n press ENTER to play the next round"
   gets
 end
 

@@ -2,16 +2,19 @@ require 'rspotify'
 require 'stop_watch'
 require_relative 'auth'
 require_relative 'help'
+require_relative 'gameUI'
 require './highscores'
 
 class Game
   attr_reader :player 
 
   include Highscores 
+  include UI
 
   def initialize
     RSpotify.authenticate(CLIENT_ID, CLIENT_SECRET)
     @player = SpotifyAccount.new()
+    @prompt = TTY::Prompt.new
   end
 
   def featured_playlists
@@ -25,10 +28,13 @@ class Game
   end
 
   def select_playlist_list
-    puts "would you like to play with \n 1. a profile playlist \n 2. search playlists \n 3. popular playlists"
+    puts "Awesome, you're authenticated.\nLet's choose a playlist. "
+
+    searchingBox()
+
     input = gets.chomp.to_i
     if (input === 1)
-      return user_playlist
+      return user_playlist 
     elsif (input === 2)
       print "search query: "
       input = gets.chomp
@@ -45,12 +51,11 @@ class Game
 
   def select_playlist
     playlist_list = select_playlist_list
-    puts "Select a playlist to play the game with\n"
     playlist_list.select! {|p| p.tracks.length() > 12}
-    playlist_list.each_with_index {|p,idx| puts "\t#{idx + 1}. - #{p.name} (Difficulty: #{playlist_difficulty(p.tracks.length())})"}
-
-    print 'Playlist num: ' 
-    playlist = playlist_list[gets.chomp.to_i - 1]
+    options_hash = {}
+    playlist_list.each_with_index {|p,index| options_hash["\u{2B21} #{p.name} (Difficulty: #{playlist_difficulty(p.tracks.length())})"] = index}
+    options_hash
+    playlist = playlistBox(options_hash) - 1
     @played_songs = []
 
     return playlist
@@ -75,9 +80,11 @@ class Game
 
   #prints out a of the songs, their index, and their artist name
   def print_song_list(song_list)
-    song_list.each_with_index {|s, idx| puts "\t #{idx + 1}. #{s.name} - #{s.artists.reduce("") {|accumulator, artist| accumulator + artist.name + "  "}}"}
+    options_hash = {}
+    song_list.each_with_index {|s, index| options_hash["\u{2B21} #{s.name} - #{s.artists.reduce("") {|accumulator, artist| accumulator + artist.name + "  "}}"] = index}
+    options_hash
   end
-  
+
   def calculate_points(seconds)
     points = (1108.8 * (2.71 ** (-0.103 * seconds))).ceil 
     return points
@@ -96,11 +103,8 @@ class Game
     gets
 
     player.pause
-    print_song_list(song_list)
 
-    print "The song was: "
-
-    guess_index = gets.chomp.to_i - 1
+    guess_index =  guessBox(print_song_list(song_list)) - 1
     seconds = watch.mark[0].round(2)
     puts "\n#{seconds} seconds"
     if (guess_index === @correctSongIndex)
