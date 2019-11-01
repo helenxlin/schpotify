@@ -1,19 +1,8 @@
 require 'rspotify'
 require 'stop_watch'
 require_relative 'auth'
-require_relative 'help'
-<<<<<<< HEAD
-require_relative 'nowplaying-ui'
-require_relative 'welcome_ui.rb'
-=======
 require_relative 'gameUI'
->>>>>>> fa8d6922123d75599687ba1053eea8cea3c34a32
 require './highscores'
-require_relative 'spotify_not_open_ui'
-require_relative 'setup_ui'
-require_relative 'playlist_ui'
-require_relative 'correct_ui'
-require_relative 'incorrect_ui'
 
 class Game
   attr_reader :player 
@@ -43,13 +32,9 @@ class Game
   end
 
   def select_playlist_list
-
-    incorrectInput = true
-
     puts "\n🚀  Awesome, you're authenticated! ✅\n\nLet's choose a playlist.\n\n"
 
     result = searchingBox()
-
   end
 
   #raise "Please create a playlist. You must have at least one \n" if (playlist_list.empty?)

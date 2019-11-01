@@ -24,14 +24,12 @@ module UI
       end
     end 
 
-
     def playlistBox(options)
       @prompt.select("\nSelect a playlist to play the game with\nWhich one?", options)
     end 
 
-
     def guessBox(options)
-        @prompt.select("My guess is...", options) 
+        @prompt.select("", options) 
     end
 
     def printHelpBox()
@@ -49,28 +47,8 @@ module UI
       end
       puts helpBox
     end
-
-    def printFinalResults(score)
-      :green #1DB954
-      :black #000000
-  
-      finalResults = TTY::Box.frame(align: :left, width: TTY::Screen.width - 5, height: 10, title: {top_left: ' 👑 Final Results  '}, border: :thick, padding: 1, style: {
-          fg: :green,
-          border: {
-            fg: :black,
-            bg: :green
-          }
-        }) do
-          "Great Game! You scored #{score} points.
-          \nLEADERBOARD:             TOTAL SCORES:              GAMES:            ROUNDS:
-          \n-----------------------------------------------------------------------------
-          \n" 
-        end
-      puts finalResults
-    end
     
     def printNowPlayingBox()
-      puts "\nPause when you think you know the name.\nThe faster you guess, the higher your points!\nRemember you can use any of the command prompts. Hit H to see them! "
       bar = TTY::ProgressBar.new("Song time elapsed [:bar]", total: 30)
       30.times do
         sleep(1)
@@ -111,7 +89,6 @@ module UI
           end
         puts welcomeBox
       end
-
 
       def printSpotifyNotOpenBox()
         :green #1DB954
