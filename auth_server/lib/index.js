@@ -1,10 +1,12 @@
-const express = require('express')
-const chalk = require('chalk')
-const uuid = require('uuid/v4')
-const session = require("client-sessions");
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const db = require("./models")
+const express = require('express'),
+  chalk = require('chalk'),
+  uuid = require('uuid/v4'),
+  session = require("client-sessions"),
+  mongoose = require('mongoose'),
+  bodyParser = require('body-parser'),
+  db = require("./models"),
+  path = require('path'),
+  fs = require('fs')
 
 
 require('dotenv').config({ path: '../../.env'})
@@ -37,6 +39,19 @@ app.use(session({
     return uuid()
   }
 }));
+
+app.get('/stream', (req, res) => {
+  const file = __dirname + '/../public/song.m4a'
+  fs.exists(file, (exists) => {
+    if (exists) {
+      const rstream = fs.createReadStream(file);
+      rstream.pipe(res);
+    } else {
+      res.send('Error - 404');
+      res.end();
+    }
+  });
+})
 
 app.post('/new_score', async (req, res) => {
   const {score, playlist, username} = req.body
