@@ -14,6 +14,7 @@ require_relative 'incorrect_ui'
 class Game
   attr_reader :player 
 
+  include HelpBox
   include Highscores
   include UI
   include WelcomeBox

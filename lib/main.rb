@@ -28,6 +28,5 @@ end
 
 
 puts "You finished with a score of #{@score}"
-puts game.printIncorrectBox(@score)
 
 game.new_score(@score, @playlist.id)
