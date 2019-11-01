@@ -155,7 +155,7 @@ class Game
       return calculate_points(seconds)
 
     else
-      puts "That is incorrrect.  ❎ " + song_list[@correctSongIndex].name + " is the correct song!"
+      puts "That is incorrrect.  ❎  " + song_list[@correctSongIndex].name + " is the correct song!"
       return 0
     end
   end
