@@ -30,18 +30,7 @@ class Game
   def select_playlist_list
     puts "Awesome, you're authenticated.\nLet's choose a playlist. "
 
-    searchingBox()
-
-    input = gets.chomp.to_i
-    if (input === 1)
-      return user_playlist 
-    elsif (input === 2)
-      print "search query: "
-      input = gets.chomp
-      return search_playlist(input)
-    elsif (input === 3)
-      return featured_playlists
-    end
+    result = searchingBox()
   end
 
   #raise "Please create a playlist. You must have at least one \n" if (playlist_list.empty?)

@@ -26,9 +26,9 @@ module UI
 
     def searchingBox()
       value = @prompt.select('Search through...') do |menu|
-        menu.choice '(U+2B21) Your own playlists', 1
-        menu.choice '/u2B21} Genre or name of any public playlists', 2
-        menu.choice '/u{2B21} Top Trending songs playlists', 3
+        menu.choice "\u{2B21}Your own playlists", 1
+        menu.choice "\u{2B21}Genre or name of any public playlists", 2
+        menu.choice "\u{2B21}Top Trending songs playlists", 3
       end
       puts value
 
