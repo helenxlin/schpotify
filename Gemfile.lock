@@ -67,6 +67,7 @@ GEM
     unf_ext (0.0.7.6)
     unicode-display_width (1.6.0)
     unicode_utils (1.4.0)
+    wavefile (1.1.0)
 
 PLATFORMS
   ruby
@@ -79,6 +80,7 @@ DEPENDENCIES
   stop_watch
   tty-box
   tty-screen
+  wavefile
 
 BUNDLED WITH
    1.17.3
