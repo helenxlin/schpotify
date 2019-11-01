@@ -2,16 +2,19 @@ require 'rspotify'
 require 'stop_watch'
 require_relative 'auth'
 require_relative 'help'
+require_relative 'gameUI'
 require './highscores'
 
 class Game
   attr_reader :player 
 
   include Highscores 
+  include UI
 
   def initialize
     RSpotify.authenticate(CLIENT_ID, CLIENT_SECRET)
     @player = SpotifyAccount.new()
+    @prompt = TTY::Prompt.new
   end
 
   def featured_playlists
@@ -32,26 +35,9 @@ class Game
   def select_playlist_list
     incorrectInput = true
 
-    puts "\n\n🚀  Awesome, you're authenticated! ✅\n\nLet's choose a playlist.\n\n🔍  Search through... \n 1. Your own playlists 🙋‍♀️ \n 2. Genre or name of any public playlists 👨‍👩‍👧‍👦\n 3. Top trending songs playlists 🔥\n\n"
-    print 'Search Number: '
-    userInput = gets.chomp
+    puts "\n🚀  Awesome, you're authenticated! ✅\n\nLet's choose a playlist.\n\n"
 
-    while(incorrectInput) do
-      if (is_integer_between_bounds?(userInput, 3))
-        if (userInput.to_i === 1)
-          return user_playlist
-        elsif (userInput.to_i === 2)
-          print "search query: "
-          input = gets.chomp
-          return search_playlist(input)
-        elsif (userInput.to_i === 3)
-          return featured_playlists
-        end
-      else
-        puts "🚀  Awesome, you're authenticated! ✅\n\nLet's choose a playlist.\n\n🔍  Search through... \n 1. Your own playlists   🙋‍♀️ \n 2. Genre or name of any public playlists   👨‍👩‍👧‍👦\n 3. Top trending songs playlists   🔥\n\n"
-        userInput = gets.chomp
-      end
-    end
+    result = searchingBox()
   end
 
   #raise "Please create a playlist. You must have at least one \n" if (playlist_list.empty?)
@@ -70,24 +56,13 @@ class Game
     end
 
     puts "\n🤪🤪  Which playlist would you like to play the game with? 🤪🤪\n"
-    playlist_list.each_with_index {|p,idx| puts "\t#{idx + 1}. #{p.name}   (Difficulty: #{playlist_difficulty(p.tracks.length())})"}
+    options_hash = {}
+    playlist_list.each_with_index {|p,index| options_hash["\u{2B21} #{p.name} (Difficulty: #{playlist_difficulty(p.tracks.length())})"] = index}
+    options_hash
+    playlist = playlistBox(options_hash)
+    @played_songs = []
 
-    invalidInput = true
-    print "\nPlaylist Number: "
-    userNum = gets.chomp
-
-    while (invalidInput) do
-      if (is_integer_between_bounds?(userNum, playlist_list.length))
-        playlist = playlist_list[userNum.to_i - 1]
-        @played_songs = []
-        invalidInput = false
-      else
-        print 'Playlist Number: ' 
-        userNum = gets.chomp
-      end
-    end
-
-    return playlist
+    return playlist_list[playlist]
     
   end
 
@@ -110,9 +85,11 @@ class Game
 
   #prints out a of the songs, their index, and their artist name
   def print_song_list(song_list)
-    song_list.each_with_index {|s, idx| puts "\t #{idx + 1}. #{s.name}  |  #{s.artists.reduce("") {|accumulator, artist| accumulator + artist.name + "  "}}"}
+    options_hash = {}
+    song_list.each_with_index {|s, index| options_hash["\u{2B21} #{s.name} - #{s.artists.reduce("") {|accumulator, artist| accumulator + artist.name + "  "}}"] = index}
+    options_hash
   end
-  
+
   def calculate_points(seconds)
     points = (1108.8 * (2.71 ** (-0.103 * seconds))).ceil 
     return points
@@ -127,28 +104,14 @@ class Game
     watch = StopWatch::Timer.new
     watch.mark
 
-    puts "\n\n✋  Pause when you think you know the name of the song.  ✋\n\n🏃‍♂️💨  The faster you guess, the higher your points! 📈\n\n\nRemember you can use any of the command prompts 🧐  hit the H key to see them!"
+    puts "\n✋  Pause when you think you know the name of the song.  ✋\n\n🏃‍♂️💨  The faster you guess, the higher your points! 📈\n\n\nRemember you can use any of the command prompts 🧐  hit the H key to see them!"
     gets
 
     player.pause
+    print "\n🎵🎤🎧 The song is "
+    guess_index =  guessBox(print_song_list(song_list)) - 1
     print_song_list(song_list)
-
-    # User Validation
-    incorrectInput = true
-    print "\n🎵🎤🎧 The song number is "
-    userInput = gets.chomp
-
-    while (incorrectInput) do
-     if(is_integer_between_bounds?(userInput, 4))
-        incorrectInput = false
-     else
-        print "\n🎵🎤🎧 The song number is "
-        userInput = gets.chomp
-     end
-    end
-    
-
-    guess_index = userInput.to_i - 1
+  
     seconds = watch.mark[0].round(2)
     puts "\n⏱ #{seconds}s"
     if (guess_index === @correctSongIndex)

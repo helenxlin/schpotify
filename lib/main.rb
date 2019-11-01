@@ -2,7 +2,7 @@ require_relative 'game'
 
 game = Game.new
 
-score = 0;
+@score = 0
 
 playlist = game.select_playlist
 highscores = game.playlist_highscore(playlist.id)
