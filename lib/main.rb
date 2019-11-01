@@ -4,7 +4,7 @@ game = Game.new
 
 @score = 0
 
-printWelcomeBox()
+game.printWelcomeBox()
 playlist = game.select_playlist
 highscores = game.playlist_highscore(playlist.id)
 player_highscore = game.player_highscore(playlist.id)
