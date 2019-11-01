@@ -113,7 +113,7 @@ class Game
     puts "\n⏱ #{seconds}s"
 
     if (guess_index === @correctSongIndex)
-      return calculate_points(@seconds)
+      return calculate_points(seconds)
     else
       puts "That is incorrrect.  ❎  " + song_list[@correctSongIndex].name + " is the correct song!"
       return 0
