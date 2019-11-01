@@ -35,12 +35,12 @@ The game class is responsible for the entire game procedure and implements a var
 ### Help
 The helpbox prompts user for the helpbox
 - "SPACE" - pause the song to guess
-- \nR - rewind 5 seconds
-- \nF - fast forward 5 seconds
-- \nENTER - go through the game
-- \nS - Shuffle the playlist
-- \nESC - quit the game
-- \n\n Hit Enter to start!"
+- "R" - rewind 5 seconds
+- "F" - fast forward 5 seconds
+- "ENTER" - go through the game
+- "S" - Shuffle the playlist
+- "ESC" - quit the game
+- Hit Enter to start!"
 
 ### High Scores
 This module stores all of the high scores for the game on an online server. This module is has the following functions:
