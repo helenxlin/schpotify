@@ -1,7 +1,6 @@
 require 'rspotify'
 require 'stop_watch'
 require_relative 'auth'
-require_relative 'help'
 require_relative 'gameUI'
 require './highscores'
 
@@ -33,8 +32,6 @@ class Game
   end
 
   def select_playlist_list
-    incorrectInput = true
-
     puts "\n\nLet's choose a playlist.\n\n"
 
     result = searchingBox()
@@ -63,7 +60,7 @@ class Game
     @played_songs = []
 
     return playlist_list[playlist]
-    
+
   end
 
   # creates a list of 4 songs to choose from, chooses one of them to be the correct song
@@ -91,8 +88,8 @@ class Game
   end
 
   def calculate_points(seconds)
-    points = (1108.8 * (2.71 ** (-0.103 * seconds))).ceil 
-    return points
+    @points = (1108.8 * (2.71 ** (-0.103 * seconds))).ceil 
+    return @points
   end 
 
   # the user guesses the song, returns true or false if they got it correct on not
@@ -111,11 +108,12 @@ class Game
     print "\n🎵🎤🎧 The song is "
     guess_index =  guessBox(print_song_list(song_list)) 
     print_song_list(song_list)
-  
+
     seconds = watch.mark[0].round(2)
     puts "\n⏱ #{seconds}s"
+
     if (guess_index === @correctSongIndex)
-      return calculate_points(seconds)
+      return calculate_points(@seconds)
     else
       puts "That is incorrrect.  ❎  " + song_list[@correctSongIndex].name + " is the correct song!"
       return 0
