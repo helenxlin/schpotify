@@ -27,8 +27,15 @@ class Game
      RSpotify::User.find(userid).playlists
   end
 
+  def is_integer_between_bounds?(input, upperBound)
+    !!Integer(input) && ((input.to_i >= 1) && (input.to_i <= upperBound))
+    rescue then false
+  end
+
   def select_playlist_list
-    puts "Awesome, you're authenticated.\nLet's choose a playlist. "
+    incorrectInput = true
+
+    puts "\n🚀  Awesome, you're authenticated! ✅\n\nLet's choose a playlist.\n\n"
 
     result = searchingBox()
   end
@@ -40,17 +47,26 @@ class Game
 
   def select_playlist
     playlist_list = select_playlist_list
-    playlist_list.select! {|p| p.tracks.length() > 12}
+    playlist_list.select! {|p| p.tracks.length() > 15}
+
+    while (playlist_list.length() == 0) 
+      puts "Sorry. There are no matches for what you searched up."
+      playlist_list = select_playlist_list()
+      playlist_list.select! {|p| p.tracks.length() > 15}
+    end
+
+    puts "\n🤪🤪  Which playlist would you like to play the game with? 🤪🤪\n"
     options_hash = {}
     playlist_list.each_with_index {|p,index| options_hash["\u{2B21} #{p.name} (Difficulty: #{playlist_difficulty(p.tracks.length())})"] = index}
     options_hash
-    playlist = playlistBox(options_hash) - 1
+    playlist = playlistBox(options_hash)
     @played_songs = []
 
-    return playlist
+    return playlist_list[playlist]
+    
   end
 
-  # creates a lis of 4 songs to choose from, chooses one of them to be the correct song
+  # creates a list of 4 songs to choose from, chooses one of them to be the correct song
   def create_song_list(playlist)
     songs = []
     random_numbers =[]
@@ -88,19 +104,21 @@ class Game
     watch = StopWatch::Timer.new
     watch.mark
 
-    puts "Press enter when you are ready to guess"
+    puts "\n✋  Pause when you think you know the name of the song.  ✋\n\n🏃‍♂️💨  The faster you guess, the higher your points! 📈\n\n\nRemember you can use any of the command prompts 🧐  hit the H key to see them!"
     gets
 
     player.pause
-
+    print "\n🎵🎤🎧 The song is "
     guess_index =  guessBox(print_song_list(song_list)) - 1
+    print_song_list(song_list)
+  
     seconds = watch.mark[0].round(2)
-    puts "\n#{seconds} seconds"
+    puts "\n⏱ #{seconds}s"
     if (guess_index === @correctSongIndex)
       return calculate_points(seconds)
 
     else
-      puts song_list[@correctSongIndex].name + " is the correct song"
+      puts "That is incorrrect.  ❎  " + song_list[@correctSongIndex].name + " is the correct song!"
       return 0
     end
   end
