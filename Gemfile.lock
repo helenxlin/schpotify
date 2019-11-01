@@ -22,6 +22,7 @@ GEM
     multi_json (1.14.1)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
+    necromancer (0.5.0)
     netrc (0.11.0)
     oauth2 (1.4.2)
       faraday (>= 0.8, < 2.0)
@@ -66,12 +67,24 @@ GEM
       tty-cursor (~> 0.7)
       tty-screen (~> 0.7)
       unicode-display_width (~> 1.6)
+<<<<<<< HEAD
+=======
+    tty-prompt (0.19.0)
+      necromancer (~> 0.5.0)
+      pastel (~> 0.7.0)
+      tty-reader (~> 0.6.0)
+    tty-reader (0.6.0)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.7)
+      wisper (~> 2.0.0)
+>>>>>>> fa8d6922123d75599687ba1053eea8cea3c34a32
     tty-screen (0.7.0)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.6)
     unicode-display_width (1.6.0)
     unicode_utils (1.4.0)
+    wisper (2.0.1)
 
 PLATFORMS
   ruby
@@ -84,6 +97,10 @@ DEPENDENCIES
   stop_watch
   tty-box
   tty-progressbar
+<<<<<<< HEAD
+=======
+  tty-prompt
+>>>>>>> fa8d6922123d75599687ba1053eea8cea3c34a32
   tty-screen
 
 BUNDLED WITH
